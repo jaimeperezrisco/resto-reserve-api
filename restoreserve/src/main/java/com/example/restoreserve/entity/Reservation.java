@@ -14,9 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "reservations")
+
 public class Reservation {
-    @Id @GeneratedValue
-    Long id;
+    @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(optional = false)
     private Mesa mesa;

@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "mesas")
+
 public class Mesa {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
