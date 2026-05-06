@@ -11,9 +11,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "mesas")
+@Table(name = "restaurant_tables")
 
-public class Mesa {
+public class RestaurantTable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

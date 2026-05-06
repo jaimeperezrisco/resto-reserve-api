@@ -19,14 +19,6 @@ public class Reservation {
     @Id @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "mesa_id", nullable = false)
-    private Mesa mesa;
-
-    @ManyToOne (optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     @Column(nullable = false)
     private LocalDateTime reservationDate;
 
@@ -36,4 +28,12 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ReservationStatus status;
+
+    @ManyToOne (optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "restaurant_table_id", nullable = false)
+    private RestaurantTable restaurantTable;
 }
