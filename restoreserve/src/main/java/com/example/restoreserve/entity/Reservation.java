@@ -20,9 +20,11 @@ public class Reservation {
     private Long id;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "mesa_id", nullable = false)
     private Mesa mesa;
 
     @ManyToOne (optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(nullable = false)
@@ -32,5 +34,6 @@ public class Reservation {
     private int numberOfGuests;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ReservationStatus status;
 }
