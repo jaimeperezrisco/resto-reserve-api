@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 
 public record ReservationRequestDTO(
     @NotNull(message = "restaurant table cant be empty")
-    Long id,
+    Long tableId,
 
     @NotNull(message = "date cant be empty")
-    @Future(message = "date not valid") LocalDateTime reservationDate,
+    @Future(message = "date not valid")
+    LocalDateTime reservationDate,
 
     @Min(value = 1, message = "Min 1 person")
     @Max(value = 12, message = "Max 12 persons")

@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    boolean existsByRestaurantTableIdAndReservationDateBetween(Long restaurantTableId, LocalDateTime start, LocalDateTime end, ReservationStatus status);
     List<Reservation> findByUserUsername(String userUsername);
-    List<Reservation> findByUserUsernameAndStatus(
-            String username,
-            ReservationStatus status
+    List<Reservation> findByRestaurantTableIdAndReservationDateBetween(
+        Long tableId,
+        LocalDateTime start,
+        LocalDateTime end
     );
 }
