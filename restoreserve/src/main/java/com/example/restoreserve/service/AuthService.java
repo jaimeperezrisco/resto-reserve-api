@@ -53,7 +53,7 @@ public class AuthService {
     user.setUsername(dto.username());
     user.setPassword(passwordEncoder.encode(dto.password()));
     user.setFullName(dto.fullName());
-    user.setRole(Role.ROLE_USER);
+    user.setRole(Role.ADMIN); //FORZAMOS EL ADMIN PARA PODER CREAR TABLAS
 
     userRepository.save(user);
 

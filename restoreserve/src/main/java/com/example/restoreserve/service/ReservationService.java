@@ -54,7 +54,7 @@ public class ReservationService {
     List<Reservation> entities;
 
     // logica de roles: ADMIN ve todas, USER solo las suyas
-    if (user.getRole() == Role.ROLE_ADMIN) {
+    if (user.getRole() == Role.ADMIN) {
       entities = reservationRepository.findAll();
     } else {
       entities = reservationRepository.findByUserUsername(username);

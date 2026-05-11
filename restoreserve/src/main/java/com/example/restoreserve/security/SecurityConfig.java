@@ -31,11 +31,11 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
                 "/api/v1/auth/**",
+                "/api-docs/**",
                 "/swagger-ui/**",
-                "/v3/api-docs/**",
                 "/h2-console/**"
             ).permitAll()
-            .requestMatchers("/api/v1/tables/**").hasRole("ADMIN")
+            .requestMatchers("/api/v1/tables/**").hasAuthority("ADMIN")
             .anyRequest().authenticated()
         )
 
