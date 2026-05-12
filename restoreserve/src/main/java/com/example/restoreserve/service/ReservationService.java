@@ -19,6 +19,10 @@ public class ReservationService {
   private final RestaurantTableService tableService;
 
   public ReservationResponseDTO createReservation(ReservationRequestDTO dto, String username) {
+    if (dto.reservationDate().isBefore(LocalDateTime.now())) {
+      throw new IllegalArgumentException("La reserva no puede ser en el pasado.");
+    }
+
     //Obtener entidades
     User user = userService.findByUsername(username);
     RestaurantTable table = tableService.findById(dto.tableId());
