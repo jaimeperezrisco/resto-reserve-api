@@ -3,6 +3,7 @@ package com.example.restoreserve.service;
 import com.example.restoreserve.dto.TableRequestDTO;
 import com.example.restoreserve.dto.TableResponseDTO;
 import com.example.restoreserve.entity.RestaurantTable;
+import com.example.restoreserve.exception.ResourceNotFoundException;
 import com.example.restoreserve.repository.RestaurantTableRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class RestaurantTableService {
 
   public RestaurantTable findById(Long id) {
     return tableRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
+        .orElseThrow(() -> new ResourceNotFoundException("Mesa no encontrada"));
   }
 
   private TableResponseDTO toDTO(RestaurantTable table) {

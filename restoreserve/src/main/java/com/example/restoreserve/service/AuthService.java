@@ -5,6 +5,7 @@ import com.example.restoreserve.dto.AuthResponseDTO;
 import com.example.restoreserve.dto.RegisterRequestDTO;
 import com.example.restoreserve.entity.Role;
 import com.example.restoreserve.entity.User;
+import com.example.restoreserve.exception.ResourceNotFoundException;
 import com.example.restoreserve.repository.UserRepository;
 import com.example.restoreserve.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,7 +39,7 @@ public class AuthService {
     );
 
     User user = userRepository.findByUsername(dto.username())
-        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
     String token = jwtService.generateToken(user.getUsername());
     return new AuthResponseDTO(token);

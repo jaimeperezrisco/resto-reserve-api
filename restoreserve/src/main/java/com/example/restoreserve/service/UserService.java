@@ -1,6 +1,7 @@
 package com.example.restoreserve.service;
 
 import com.example.restoreserve.entity.User;
+import com.example.restoreserve.exception.ResourceNotFoundException;
 import com.example.restoreserve.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class UserService {
 
   public User findByUsername(String username) {
     return userRepository.findByUsername(username)
-        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
   }
 
 }

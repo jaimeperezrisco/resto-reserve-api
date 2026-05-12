@@ -3,6 +3,7 @@ package com.example.restoreserve.service;
 import com.example.restoreserve.dto.ReservationRequestDTO;
 import com.example.restoreserve.dto.ReservationResponseDTO;
 import com.example.restoreserve.entity.*;
+import com.example.restoreserve.exception.ResourceNotFoundException;
 import com.example.restoreserve.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class ReservationService {
         .anyMatch(r -> r.getStatus() != ReservationStatus.CANCELLED);
 
     if (hasConflict) {
-      throw new RuntimeException("La mesa ya tiene una reserva en ese rango de 2 horas.");
+      throw new IllegalArgumentException("La mesa ya tiene una reserva en ese rango de 2 horas.");
     }
 
     //Mapear DTO a Entidad
@@ -65,7 +66,7 @@ public class ReservationService {
 
   public void cancelReservation(Long id) {
     Reservation res = reservationRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+        .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada"));
 
     // Aplicar Soft Delete
     res.setStatus(ReservationStatus.CANCELLED);
