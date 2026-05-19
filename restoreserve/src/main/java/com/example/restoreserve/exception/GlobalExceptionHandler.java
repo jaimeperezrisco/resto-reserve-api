@@ -1,6 +1,7 @@
 package com.example.restoreserve.exception;
 
 import com.example.restoreserve.dto.ErrorResponse;
+import com.example.restoreserve.exception.UserBannedException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,5 +28,11 @@ public class GlobalExceptionHandler {
             errors.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(UserBannedException.class)
+    public ResponseEntity<ErrorResponse> handleUserBanned(UserBannedException ex) {
+        ErrorResponse error = new ErrorResponse("FORBIDDEN", ex.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 }

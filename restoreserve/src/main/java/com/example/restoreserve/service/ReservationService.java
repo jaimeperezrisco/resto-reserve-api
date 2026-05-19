@@ -4,6 +4,7 @@ import com.example.restoreserve.dto.ReservationRequestDTO;
 import com.example.restoreserve.dto.ReservationResponseDTO;
 import com.example.restoreserve.entity.*;
 import com.example.restoreserve.exception.ResourceNotFoundException;
+import com.example.restoreserve.exception.UserBannedException;
 import com.example.restoreserve.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class ReservationService {
 
     //Obtener entidades
     User user = userService.findByUsername(username);
+    if (user.getStatus() == UserStatus.BANNED) {
+      throw new UserBannedException("User is banned due to multiple late cancellations");
+    }
     RestaurantTable table = tableService.findById(dto.tableId());
 
     //Validar margen de 2 horas
@@ -72,9 +76,26 @@ public class ReservationService {
     Reservation res = reservationRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada"));
 
+    applyLateCancellationPenalty(res);
+
     // Aplicar Soft Delete
     res.setStatus(ReservationStatus.CANCELLED);
     reservationRepository.save(res);
+  }
+
+  private void applyLateCancellationPenalty(Reservation reservation) {
+    LocalDateTime limit = reservation.getReservationDate().minusHours(2);
+    if (!LocalDateTime.now().isAfter(limit)) {
+      return;
+    }
+
+    User user = reservation.getUser();
+    int points = user.getPenalizationPoints() + 2;
+    user.setPenalizationPoints(points);
+    if (points > 6) {
+      user.setStatus(UserStatus.BANNED);
+    }
+    userService.save(user);
   }
 
   //Método auxiliar de mapeo para cumplir con el uso de DTOs

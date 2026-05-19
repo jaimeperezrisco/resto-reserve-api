@@ -1,7 +1,9 @@
 package com.example.restoreserve.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -23,5 +25,13 @@ public class User {
     private Role role;
 
     @Column(nullable = false)
+    private int penalizationPoints = 0;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserStatus status = UserStatus.ACTIVE;
+
+    @Column(nullable = false)
     private String fullName;
+
 }

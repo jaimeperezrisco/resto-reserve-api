@@ -36,6 +36,7 @@ public class SecurityConfig {
                 "/h2-console/**"
             ).permitAll()
             .requestMatchers("/api/v1/tables/**").hasAuthority("ADMIN")
+            .requestMatchers("/api/v1/users/**").hasAuthority("ADMIN")
             .anyRequest().authenticated()
         )
 
