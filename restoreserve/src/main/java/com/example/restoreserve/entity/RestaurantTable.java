@@ -18,5 +18,9 @@ public class RestaurantTable {
 
     @Column(nullable = false)
     private int capacity;
+
+    @Column(nullable = false)
+    private boolean isVip;
+
 }
 

@@ -42,6 +42,12 @@ public class ReservationService {
       throw new IllegalArgumentException("La mesa ya tiene una reserva en ese rango de 2 horas.");
     }
 
+    //B. Gestión de Mesas VIP
+    int userResNumber = getReservations(user.getUsername()).size();
+    if (table.isVip() && userResNumber < 3)
+      throw new IllegalArgumentException("Solo clientes habituales pueden reservar mesas VIP");
+
+
     //Mapear DTO a Entidad
     Reservation reservation = new Reservation();
     reservation.setReservationDate(dto.reservationDate());
@@ -50,11 +56,26 @@ public class ReservationService {
     reservation.setUser(user);
     reservation.setRestaurantTable(table);
 
+
     //guardar y devolver DTO
     return mapToDTO(reservationRepository.save(reservation));
   }
 
   public List<ReservationResponseDTO> getReservations(String username) {
+    User user = userService.findByUsername(username);
+    List<Reservation> entities;
+
+    // logica de roles: ADMIN ve todas, USER solo las suyas
+    if (user.getRole() == Role.ADMIN) {
+      entities = reservationRepository.findAll();
+    } else {
+      entities = reservationRepository.findByUserUsername(username);
+    }
+
+    return entities.stream().map(this::mapToDTO).toList();
+  }
+
+  public List<ReservationResponseDTO> getCompletedReservations(String username) {
     User user = userService.findByUsername(username);
     List<Reservation> entities;
 

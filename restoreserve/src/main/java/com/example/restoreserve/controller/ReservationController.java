@@ -2,6 +2,7 @@ package com.example.restoreserve.controller;
 
 import com.example.restoreserve.dto.ReservationRequestDTO;
 import com.example.restoreserve.dto.ReservationResponseDTO;
+import com.example.restoreserve.dto.TableResponseDTO;
 import com.example.restoreserve.service.ReservationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,12 @@ public class ReservationController {
 
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
     return new ResponseEntity<>(reservationService.createReservation(dto, username), HttpStatus.CREATED);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<ReservationResponseDTO>> getAllCompletedRes() {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    return ResponseEntity.ok(reservationService.getReservations(username));
   }
 
   @GetMapping

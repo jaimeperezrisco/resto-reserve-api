@@ -38,7 +38,7 @@ class ReservationServiceTest {
         2
     );
 
-    assertThrows(IllegalArgumentException.class, () -> reservationService.createReservation(dto, "user"));
+    assertThrows(IllegalArgumentException.class, () -> reservationService.createReservation(dto, "user", ));
 
     verify(reservationRepository, never()).save(any());
   }

@@ -40,7 +40,7 @@ public class RestaurantTableService {
     return new TableResponseDTO(
         table.getId(),
         table.getName(),
-        table.getCapacity()
+        table.getCapacity(),table.isVip()
     );
   }
 }

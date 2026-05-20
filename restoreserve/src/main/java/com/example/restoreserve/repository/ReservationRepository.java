@@ -1,6 +1,7 @@
 package com.example.restoreserve.repository;
 
 import com.example.restoreserve.entity.Reservation;
+import com.example.restoreserve.entity.ReservationStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
@@ -14,4 +15,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
         LocalDateTime start,
         LocalDateTime end
     );
+    List<Reservation> findCompletedReservations();
 }
