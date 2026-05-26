@@ -27,6 +27,10 @@ public class ReservationService {
     User user = userService.findByUsername(username);
     RestaurantTable table = tableService.findById(dto.tableId());
 
+    if(dto.numberOfGuests()>table.getCapacity()){
+      throw new IllegalArgumentException("El numero de comensales supera la capacidad de la mesa.");
+    }
+
     //Validar margen de 2 horas
     LocalDateTime start = dto.reservationDate().minusHours(2);
     LocalDateTime end = dto.reservationDate().plusHours(2);
